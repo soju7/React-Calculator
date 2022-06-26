@@ -1,0 +1,34 @@
+body{
+    position: relative;
+    height: 100vh;
+}
+.calculator{
+    display: grid;
+    grid-template-columns: repeat(4, 100px);
+    grid-gap: 0px;
+
+    
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+}
+.display {
+    grid-column: 1 / 5;    
+    text-align: right;
+    outline: 1px solid black; 
+}
+.operations-log{    
+    padding: 20px 10px 10px 10px; 
+    display: flex;
+    justify-content: flex-end;
+    white-space: nowrap;
+    overflow: hidden;
+}
+.results{
+    padding: 10px 10px; 
+}
+.button{
+    text-align:  center;
+    padding: 20px 10px;
+}
