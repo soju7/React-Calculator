@@ -1,40 +1,47 @@
-
 import './Calculator.css';
+import { evaluate, format } from 'mathjs'
 import React, { useEffect, useState } from 'react';
-import { evaluate,format } from 'mathjs'
 
 function Calculator() {
+
   const [operationLog, setOperationLog] = useState('');
+
   const [result, setResult] = useState(0);
-  const SYMBOLS=['*', '-', '/', '+','.'];
 
-  function updateDisplay(value) {
+  const SYMBOLS = ['*', '-', '/', '+', '.'];
 
-    if (SYMBOLS.includes(value) && SYMBOLS.includes(operationLog[operationLog.length-1])) {
-      return;
+  useEffect(() => {
+
+    if (!SYMBOLS.includes(operationLog[operationLog.length - 1]) && operationLog) {
+      setResult(format(evaluate(operationLog), {upperExp:10,notation:'auto' }))
     }
-    let val = operationLog + value;
-    setOperationLog(val)
-    if (!SYMBOLS.includes(value)) {
-      setResult(evaluate(val))
-    }
+  }, [operationLog]);
+
+  function clearAll() {
+    setOperationLog('');
   }
 
   function calculate() {
     setResult(evaluate(operationLog))
   }
 
-  function clearAll() {
-    setOperationLog('');
-    setResult(0)
+  function updateDisplay(value) {
+
+    if (operationLog.length == 0 && ['*', '/'].includes(value)) {
+      return;
+    }
+
+    if (SYMBOLS.includes(value) && SYMBOLS.includes(operationLog[operationLog.length - 1])) {
+      return;
+    }
+    
+    let val = operationLog + value;
+    setOperationLog(val)
   }
 
-  function clearLastChar(){
-    let str=operationLog.slice(0, -1)
-    setOperationLog(str);    
-    if (!SYMBOLS.includes(str[str.length-1])) {
-      setResult(evaluate(str))
-    }
+  function clearLastCharacter() {
+    let str = operationLog.slice(0, -1)
+    setOperationLog(str);
   }
 
   return (
@@ -46,7 +53,7 @@ function Calculator() {
 
       <button className='button' onClick={() => { clearAll() }}>C</button>
       <button className='button' onClick={() => { updateDisplay('%') }}>%</button>
-      <button className='button' onClick={() => { clearLastChar() }}>CE</button>
+      <button className='button' onClick={() => { clearLastCharacter() }}>CE</button>
       <button className='button' onClick={() => { updateDisplay('/') }}>/</button>
 
       <button className='button' onClick={() => { updateDisplay('7') }}>7</button>
