@@ -26,15 +26,15 @@ function Calculator() {
   }
 
   function updateDisplay(value) {
-
+    //PREVENT FROM TYPING ['*','/'] AT BEGINNING.
     if (operationLog.length == 0 && ['*', '/'].includes(value)) {
       return;
     }
-
+    //PREVENT IF CURRENT VALUE IS A SYMBOL & PREVIOSLY TYPED VALUE IS ALSO A SYMBOL.
     if (SYMBOLS.includes(value) && SYMBOLS.includes(operationLog[operationLog.length - 1])) {
       return;
     }
-    
+
     let val = operationLog + value;
     setOperationLog(val)
   }
